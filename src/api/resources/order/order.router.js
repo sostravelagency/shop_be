@@ -5,12 +5,12 @@ import { sanitize } from '../../../middleware/sanitizer';
 // import { validateBody, schemas } from '../../../middleware/validator';
 
 export const orderRouter = express.Router();
-orderRouter.route('/create').post(sanitize(),orderController.index);
-orderRouter.route('/list').get(sanitize(),orderController.getAllOrderList);
-orderRouter.route('/status/update').post(sanitize(),orderController.statusUpdate);
-orderRouter.route('/list').post(sanitize(),orderController.getAllOrderListById);
-orderRouter.route('/status').post(sanitize(),orderController.getAllOrderStatus);
-orderRouter.route('/count').get(sanitize(),orderController.getAllOrderCount);
+orderRouter.route('/create').post(orderController.index);
+orderRouter.route('/list').get(orderController.getAllOrderList);
+orderRouter.route('/status/update').post(orderController.statusUpdate);
+orderRouter.route('/list').post(orderController.getAllOrderListById);
+orderRouter.route('/status').post(orderController.getAllOrderStatus);
+orderRouter.route('/count').get(orderController.getAllOrderCount);
 
 
 

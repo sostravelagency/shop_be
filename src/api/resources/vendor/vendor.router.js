@@ -19,14 +19,14 @@ import { validateBody, schemas } from '../../../middleware/validator';
 
 
 export const vendorRouter = express.Router();
-// vendorRouter.route('/create').post(sanitize(),validateBody(schemas.vendorDetails),vendorController.index);
-vendorRouter.route('/create').post(sanitize(),jwtStrategy, vendorController.index);
-vendorRouter.route('/list').get(sanitize(), jwtStrategy , vendorController.getAllvendor);
-vendorRouter.route('/product-list').get(sanitize(),vendorController.getAllVendorProduct);
-vendorRouter.route('/product/getAllProductById').post(sanitize(),vendorController.getProductByVendor);
-vendorRouter.route('/update').post(sanitize(),vendorController.vendorUpdate);
-vendorRouter.route('/delete').delete(sanitize(),vendorController.vendorDelete);
-vendorRouter.route('/product-delete').post(sanitize(),vendorController.vendorProductDelete);
+// vendorRouter.route('/create').post(validateBody(schemas.vendorDetails),vendorController.index);
+vendorRouter.route('/create').post( vendorController.index);
+vendorRouter.route('/list').get( vendorController.getAllvendor);
+vendorRouter.route('/product-list').get(vendorController.getAllVendorProduct);
+vendorRouter.route('/product/getAllProductById').post(vendorController.getProductByVendor);
+vendorRouter.route('/update').post(vendorController.vendorUpdate);
+vendorRouter.route('/delete').delete(vendorController.vendorDelete);
+vendorRouter.route('/product-delete').post(vendorController.vendorProductDelete);
 vendorRouter.route('/product-add').post(vendorController.vendorAddProduct);
 
 
