@@ -2,8 +2,6 @@ import { db } from '../../../models';
 var Sequelize = require("sequelize");
 export default {
 
-    /* Add user api start here................................*/
-
     async index(req, res, next) {
         try {
             const { customerId, paymentmethod, orderId, deliveryAddress, product, grandTotal } = req.body;

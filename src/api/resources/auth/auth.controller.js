@@ -13,7 +13,7 @@ var JWTSign = function (user, date) {
         iam : user.type,
         iat: date.getTime(),
         exp: new Date().setMinutes(date.getMinutes() + 30)
-    }, config.app.secret);
+    }, process.env.JWT_SECRET);
 }
 
 function generateOtp() {
@@ -46,7 +46,7 @@ export default {
         db.user.findOne({ where: { email: email }, paranoid: false })
             .then(find => {
                 if (find) {
-                    throw new RequestError('Email is already in use', 409);
+                    return res.status(409).json("Email is already in use");
                 }
                 return db.user.create({
                     firstName: firstName,
@@ -143,7 +143,7 @@ export default {
             httpOnly: true, secure: config.app.secure
         });
         
-        return res.status(200).json({ success: true ,token,role: req.user.role});
+        return res.status(200).json({ success: true ,token, role: req.user.role});
     },
 
      async deleteUserList(req, res, next) {

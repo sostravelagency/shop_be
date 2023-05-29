@@ -3,7 +3,7 @@ import { db } from './models';
 import { restRouter } from './api';
 import config from './config';
 import appManager from './app';
-import kue from './kue';
+// import kue from './kue';
 import './errors';
 import scheduler from './scheduler';
 import path from 'path';
@@ -43,7 +43,7 @@ app.use((error, req, res, next) => {
 	}
 });
 
-kue.init();
+// kue.init();
 /* Database Connection */
 db.sequelize.authenticate().then(function () {
 	console.log('Nice! Database looks fine');

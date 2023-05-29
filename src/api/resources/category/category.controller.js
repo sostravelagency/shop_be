@@ -201,6 +201,7 @@ export default {
                     res.status(200).json({ 'success': true, data: list });
                 })
                 .catch(function (err) {
+                    console.log(err)
                     next(err)
                 });
         }

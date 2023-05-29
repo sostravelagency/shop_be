@@ -58,20 +58,24 @@ export default {
                             discountPer: discountPer,
                             total: total,
                             netPrice: netPrice,
-                            photo: req.file ? req.file.location : '',
+                            photo: req.file ? req.file.path : '',
                         })
                     }
-                    throw new RequestError('Already exist product', 409);
+                    return res.status(409).json('Already exist product');
                 })
                 .then(product => {
                     res.status(200).json({ 'success': true, msg: "Successfully inserted product" });
                 })
                 .catch(function (err) {
+                    console.log(err)
                     next(err)
                 });
+            
         }
         catch (err) {
-            throw new RequestError('Error');
+
+            // throw new RequestError('Error');
+            return res.status(500).json(err)
         }
     },
 
@@ -386,7 +390,7 @@ export default {
 
             })
                 .then(product => {
-                    res.status(200).json({ 'success': true, data: product });
+                    res.status(200).json({ 'success': true, data: product || [] });
                 })
                 .catch(function (err) {
                     next(err)

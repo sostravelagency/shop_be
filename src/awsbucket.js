@@ -1,37 +1,22 @@
-import config from './config';
-import multer from 'multer';
-import AWS from 'aws-sdk';
-import multerS3 from 'multer-s3'
+// import config from "./config";
+import multer from "multer";
+import cloudinaryA from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+const cloudinary = cloudinaryA.v2;
 
-AWS.config.update({
-    accessKeyId: config.app.AWS_ACCESS_KEY,
-    secretAccessKey: config.app.AWS_SECRET_KEY,
-    region: config.app.AWS_REGION
-})
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-const s3 = new AWS.S3();
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true)
-    } else {
-        cb(new Error('Invalid Mime Type, only JPEG and PNG'), false);
-    }
-}
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: "uploads", // Thay đổi tên thư mục đích cho lưu trữ tệp tin
+  allowedFormats: ["jpg", "jpeg", "png"],
+  transformation: [{ width: 500, height: 500, crop: "limit" }],
+});
 
-var upload = multer({
-    storage: multerS3({
-        fileFilter,
-        s3: s3,
-        bucket: config.app.AWS_BUCKET,
-        metadata: function (req, file, cb) {
-            cb(null, { fieldName: 'abhi_meta_data' });
-        },
-        key: function (req, file, cb) {
-            cb(null, file.originalname)
-        }
-    })
-})
+const upload = multer({ storage: storage });
 
 module.exports = upload;
-
-

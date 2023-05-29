@@ -2,15 +2,15 @@ import passport from 'passport';
 import JWT from 'jsonwebtoken';
 import config from '../config';
 
-var JWTSign = function(user, date){
+const JWTSign = function(user, date){
     return JWT.sign({
-        iss : config.app.name,
+        // iss : config.app.name,
         sub : user.id,
         iat : date.getTime(),
         exp : new Date().setMinutes(date.getMinutes() + 30)
-    }, config.app.secret);
+    }, process.env.JWT_SECRET);
 }
-export var loginCheck = () => {
+export const loginCheck = () => {
     return (req, res, next) => {
         var token = null;   
         if (req && req.cookies){
@@ -22,7 +22,7 @@ export var loginCheck = () => {
         next();
     }
 }
-export var validatelogin = (req, res, next) => {
+export const validatelogin = (req, res, next) => {
     passport.authenticate('jwt', {session: false}, (err, user, info) => {
         let contype = req.headers['content-type'];
         var json = !(!contype || contype.indexOf('application/json') !== 0);
@@ -38,7 +38,7 @@ export var validatelogin = (req, res, next) => {
         var token = JWTSign(user, date);
         res.cookie('XSRF-token', token, {
             expire: new Date().setMinutes(date.getMinutes() + 30),
-            httpOnly: true, secure: config.app.secure
+            httpOnly: true, secure: true
         });
 
         req.user = user;

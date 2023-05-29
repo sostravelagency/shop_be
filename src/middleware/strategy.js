@@ -2,7 +2,7 @@ import passport from 'passport';
 import JWT from 'jsonwebtoken';
 import config from '../config';
 
-var JWTSign = function(iss, user, date){
+const JWTSign = function(iss, user, date){
     return JWT.sign({
         iss : iss,
         sub : user.id,
@@ -12,7 +12,7 @@ var JWTSign = function(iss, user, date){
     }, config.app.secret);
 }
 
-export var jwtStrategy = (req, res, next) => {
+export const jwtStrategy = (req, res, next) => {
     passport.authenticate('user-jwt', {session: false}, (err, user, info) => { 
         let contype = req.headers['content-type'];
         var json = !(!contype || contype.indexOf('application/json') !== 0);
@@ -29,6 +29,7 @@ export var jwtStrategy = (req, res, next) => {
 
 export var localStrategy = (req, res, next) => {
     passport.authenticate('user-local', {session: false}, (err, user, info) => {
+        console.log(err)
         if (err && err == 'invalid') { return res.status(500).json({ errors: ['Email Id not verified']}); }
         if (err && err == 'attempt') { return res.status(500).json({ errors: ['Too many invalid attempts. Please reset your password.']}); }
         if (err && err.startsWith('attempt:')) { return res.status(500).json({ errors: ['Invalid Credentials (' + err.split(':')[1]+' Attempt(s) Left)']}); }

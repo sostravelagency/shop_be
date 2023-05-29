@@ -1,4 +1,4 @@
-export var sanitize = function(ignore=[]){
+export const sanitize = function(ignore=[]){
     return (req, res, next) => {
         var data = [];
         if(req.body){

@@ -5,9 +5,10 @@ import { customerStrategy } from '../../../middleware/strategy';
 import { validateBody, schemas } from '../../../middleware/validator';
 
 export const customerRouter = express.Router();
+
 customerRouter.route('/register').post(sanitize(), customerController.addUser);
 customerRouter.route('/getUserByEmailId').get(sanitize(), customerController.findUser);
-customerRouter.route('/login').post(sanitize(),validateBody(schemas.loginSchema),customerStrategy, customerController.login);
+customerRouter.route('/login').post(sanitize(), customerController.login);
 
 
 // get all customer

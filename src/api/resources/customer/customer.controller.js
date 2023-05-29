@@ -8,12 +8,12 @@ import { validateEmail } from './../../../functions'
 
 var JWTSign = function (user, date) {
     return JWT.sign({
-        iss: config.app.name,
+        // iss: config.app.name,
         sub: user.id,
         iam : user.type,
         iat: date.getTime(),
         exp: new Date().setMinutes(date.getMinutes() + 30)
-    }, config.app.secret);
+    }, process.env.JWT_SECRET);
 }
 
 function generateOtp() {
@@ -46,7 +46,7 @@ export default {
         db.customer.findOne({ where: { email: email }, paranoid: false })
             .then(find => {
                 if (find) {
-                    throw new RequestError('Email is already in use', 409);
+                    return res.status(409).json("Email is already in use");
                 }
                 return db.customer.create({
                     firstName: firstName,
@@ -91,9 +91,10 @@ export default {
     },
 
     async login(req, res, next) {
+        const {email, password }= req.body
         var date = new Date();
         var token = JWTSign(req.user, date);
-        res.cookie('XSRF-token',     token, {
+        res.cookie('XSRF-token', token, {
             expire: new Date().setMinutes(date.getMinutes() + 30),
             httpOnly: true, secure: config.app.secure
         });
