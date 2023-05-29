@@ -15,6 +15,7 @@ restRouter.use('/customer', customerRouter);
 restRouter.use('/location', locationRouter);
 restRouter.use('/product', productRouter);
 restRouter.use('/vendor', vendorRouter);
+restRouter.use('/supplier', vendorRouter);
 restRouter.use('/category', categoryRouter);
 restRouter.use('/order', orderRouter);
 restRouter.use('/payment', paymentRouter);

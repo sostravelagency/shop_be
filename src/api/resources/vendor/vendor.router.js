@@ -2,9 +2,9 @@ import express from 'express';
 // import multer from 'multer';
 // import path from 'path';
 import vendorController from './vendor.controller';
-import { sanitize } from '../../../middleware/sanitizer';
-import { jwtStrategy } from '../../../middleware/strategy';
-import { validateBody, schemas } from '../../../middleware/validator';
+// import { sanitize } from '../../../middleware/sanitizer';
+// import { jwtStrategy } from '../../../middleware/strategy';
+// import { validateBody, schemas } from '../../../middleware/validator';
 // var attachmentDir = path.join(path.dirname(require.main.filename), 'public', 'images','product')
 
 // var storage = multer.diskStorage({
