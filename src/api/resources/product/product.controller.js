@@ -1,6 +1,6 @@
 import { db } from '../../../models';
 const { Op } = require("sequelize");
-import { queue } from '../../../kue';
+// import { queue } from '../../../kue';
 import config from '../../../config';
 import AWS from 'aws-sdk';
 
@@ -332,11 +332,11 @@ export default {
             where: { id: productId },
         }).then(r => {
             if (r) {
-                return queue.create('img-upload', {
-                    productId: productId,
-                    productName: r.item_name,
-                    attachmentEntries: attachmentEntries,
-                }).save();
+                // return queue.create('img-upload', {
+                //     productId: productId,
+                //     productName: r.item_name,
+                //     attachmentEntries: attachmentEntries,
+                // }).save();
             }
             throw new RequestError('ProductId is not found')
         }).then(r => {
