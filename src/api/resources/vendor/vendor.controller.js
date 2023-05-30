@@ -1,4 +1,5 @@
 import { db } from '../../../models';
+import {v4 } from "uuid"
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 export default {
@@ -7,7 +8,8 @@ export default {
 
     async index(req, res, next) {
         try {
-            const { id, storename, status, shopaddress, shopdesc, ownername, owneraddress, email,password, phone, areaId, accountNo, accountHolderName, IFSC, bankName, branch, adharCardNo, panCardNo, GSTNo } = req.body;
+            const id= v4()
+            const {  storename, status, shopaddress, shopdesc, ownername, owneraddress, email,password, phone, areaId, accountNo, accountHolderName, IFSC, bankName, branch, adharCardNo, panCardNo, GSTNo } = req.body;
             db.vendor.findOne({ where: { id: id} })
                 .then(supplier => {
                     if (supplier) {
